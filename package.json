@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky"
+    "prepare": "husky && prisma generate"
   },
   "prisma": {
     "seed": "ts-node ./prisma/seed.ts"
@@ -35,7 +35,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "postcss": "^8",
-    "prettier": "^3.5.1",
+    "prettier": "^3.5.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "prisma": "^6.3.1",
     "tailwindcss": "^3.4.1",
