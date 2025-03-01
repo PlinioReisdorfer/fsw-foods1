@@ -1,6 +1,7 @@
 "use client";
 
 import { calculateProductTotalPrice, formatCurrency } from "@/helpers/price";
+import { cn } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
 import { ArrowDownIcon } from "lucide-react";
 import Image from "next/image";
@@ -16,14 +17,18 @@ interface ProductItemProps {
       };
     };
   }>;
+  className?: string;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({ product, className }: ProductItemProps) => {
   return (
-    <Link className="w-[150px] min-w-[150px]" href={`/products/${product.id}`}>
-      <div className="w-[150px] min-w-[150px] space-y-2">
+    <Link
+      className={cn("w-[150px] min-w-[150px]", className)}
+      href={`/products/${product.id}`}
+    >
+      <div className="w-full space-y-2">
         {/*IMAGEM */}
-        <div className="relative h-[150px] w-full">
+        <div className="relative aspect-square w-full">
           <Image
             src={product.imageUrl}
             alt={product.name}
