@@ -49,7 +49,7 @@ const Header = () => {
           <div className="flex justify-between pt-6">
             <div className="flex items-center gap-3">
               <Avatar>
-              <AvatarImage className="rounded-full" src={data?.user?.image as string | undefined} />
+              <AvatarImage className="rounded-full h-16 w-16" src={data?.user?.image as string | undefined} />
               <AvatarFallback>{data?.user?.name?.split(" ")[0][0]}{data?.user?.name?.split(" ")[0][0]}</AvatarFallback>
             </Avatar>
 
@@ -82,9 +82,10 @@ const Header = () => {
 
             {data?.user && (
               <>
-              <Button variant = "ghost" className="space-x-3 w-full justify-start text-sm font-normal rounded-full">
+              <Button variant = "ghost" className="space-x-3 w-full justify-start text-sm font-normal rounded-full" asChild >
+              <Link href="/my-orders">
               <ScrollTextIcon size={16}/>
-              <span className="block">Meus Pedidos</span>
+              <span className="block">Meus Pedidos</span></Link>
             </Button>
 
             <Button variant = "ghost" className="space-x-3 w-full justify-start text-sm font-normal rounded-full">

@@ -5,13 +5,10 @@ import { Card, CardContent } from "./card";
 import { formatCurrency } from "@/helpers/price";
 import { Separator } from "./separator";
 import { Button } from "./button";
-import { create } from "domain";
-import { connect } from "http2";
 import { useSession } from "next-auth/react";
 import { OrderStatus } from "@prisma/client";
 import { createOrder } from "@/app/actions/actions/order";
 import { Loader2 } from "lucide-react";
-import { clear } from "console";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./alert-dialog";
 
 const Cart = () => {
@@ -27,8 +24,9 @@ const Cart = () => {
     const restaurant = products[0].restaurant;
     try{
       setIsSubmitLoading(true);
+      
       await createOrder({
-      subTotalPrice: subtotalPrice,
+      subtotalPrice: subtotalPrice,
       totalDiscounts,
       totalPrice,
       deliveryFee: restaurant.deliveryFee,
@@ -36,10 +34,18 @@ const Cart = () => {
       restaurant: {
         connect: {id: restaurant.id},
       },
-      status: OrderStatus.COMFIRMED,
+      status: OrderStatus.CONFIRMED,
       user: {
         connect: {id: data.user.id},
       },
+      products: {
+        createMany: {
+          data: products.map((product) => ({
+            productId: product.id,
+            quantity: product.quantity,
+          })),
+        }
+      }
     });
 
     clearCart();
@@ -117,10 +123,13 @@ const Cart = () => {
             </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-      <AlertDialogCancel disabled={isSubmitLoading}>
-        {isSubmitLoading && (<Loader2 className="ml-2 h-4 w-4 animate-spin" />)}
+      <AlertDialogCancel>
+        
         Cancelar</AlertDialogCancel>
-      <AlertDialogAction onClick={handleFinishOrderClick}>Finalizar</AlertDialogAction>
+      <AlertDialogAction onClick={handleFinishOrderClick} disabled={isSubmitLoading}>
+        {isSubmitLoading && (<Loader2 className="ml-2 h-4 w-4 animate-spin" />)}
+        Finalizar
+        </AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>
