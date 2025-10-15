@@ -8,6 +8,9 @@ import { Separator } from "@/components/ui/separator";
 import { ChevronRightIcon } from "lucide-react";
 import { formatCurrency } from "@/helpers/price";
 import Link from "next/link";
+import { useContext } from "react";
+import { CartContext } from "@/context/cart";
+import { useRouter } from "next/navigation";
 
 interface OrderItemProps {
     order: Prisma.OrderGetPayload<{
@@ -37,6 +40,19 @@ const getOrderStatusLabel = (status: OrderStatus) => {
     }
 }
 const OrderItem = ({order}:OrderItemProps) => {
+    const {addProductToCart} = useContext(CartContext);
+
+    const router = useRouter();
+    
+    const handleRedoOrderClick = () => {
+        for (const orderProduct of order.products) {
+            addProductToCart({product: {...orderProduct.product, restaurant: order.restaurant}, quantity: orderProduct.quantity});
+        }
+
+        router.push(`/restaurant/${order.restaurantId}`);
+
+
+    };
     return ( 
         <Card>
             <CardContent className="p-5">
@@ -87,7 +103,9 @@ const OrderItem = ({order}:OrderItemProps) => {
 
                     <div className="flex items-center justify-between">
                         <p className="font-semibold text-sm">{formatCurrency(Number(order.totalPrice))}</p>
-                        <Button variant="ghost" className="text-primary text-xs" size="sm" disabled={order.status !== 'COMPLETED'}>Refazer Pedido</Button>
+                        <Button variant="ghost" className="text-primary text-xs" size="sm" onClick={handleRedoOrderClick} disabled={order.status !== 'COMPLETED'}>
+                            Refazer Pedido
+                        </Button>
                     </div>
 
 
