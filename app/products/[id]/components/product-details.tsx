@@ -49,6 +49,7 @@ const ProductDetails = ({
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
     useState(false);
+    
 
   const { addProductToCart, products } = useContext(CartContext);
 
@@ -170,7 +171,7 @@ const ProductDetails = ({
           <SheetHeader>
             <SheetTitle className="text-left">Sacola</SheetTitle>
           </SheetHeader>
-          <Cart />
+          <Cart setIsOpen={setIsCartOpen}/>
         </SheetContent>
       </Sheet>
 
