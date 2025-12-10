@@ -12,7 +12,7 @@ interface CategoriesPageProps {
 const CategoriesPage = async ({ params: { id } }: CategoriesPageProps) => {
   const category = await db.category.findUnique({
     where: {
-      id,
+      id, 
     },
     include: {
       products: {
