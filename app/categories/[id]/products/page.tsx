@@ -4,11 +4,10 @@ import { db } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
 interface CategoriesPageProps {
-  params: Promise<{ id: string }>
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+  params: Promise<{
+    id: string;
+  }>;
 }
-
-
 
 const CategoriesPage = async ({ params }: CategoriesPageProps) => {
   const { id } = await params;
