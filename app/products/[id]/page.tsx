@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import ProductImage from "./components/product-image";
 import ProductDetails from "./components/product-details";
 
-interface ProductsPageProps {
+interface ProductPageProps {
   params: {
     id: string;
   };
 }
 
-const ProductsPage = async ({ params: { id } }: ProductsPageProps) => {
+const ProductPage = async ({ params: { id } }: ProductPageProps) => {
   const product = await db.product.findUnique({
     where: {
       id,
@@ -39,13 +39,13 @@ const ProductsPage = async ({ params: { id } }: ProductsPageProps) => {
 
   return (
     <div>
-      {/*IMAGEM */}
+      {/* IMAGEM */}
       <ProductImage product={product} />
 
-      {/*TITULO E PREÇO */}
+      {/* TITULO E PREÇO */}
       <ProductDetails product={product} complementaryProducts={juices} />
     </div>
   );
 };
 
-export default ProductsPage;
+export default ProductPage;
